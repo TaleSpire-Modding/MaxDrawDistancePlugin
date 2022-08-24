@@ -3,12 +3,13 @@ using BepInEx;
 using BepInEx.Configuration;
 using JetBrains.Annotations;
 using ModdingTales;
+using PluginUtilities;
 using UnityEngine.SceneManagement;
 
 namespace MaxDrawDistance
 {
-
     [BepInPlugin(Guid, "HolloFoxe's MaxDrawDistance", Version)]
+    [BepInDependency(SetInjectionFlag.Guid)]
     public class MaxDrawDistance : BaseUnityPlugin
     {
         // constants
@@ -24,8 +25,8 @@ namespace MaxDrawDistance
         public void DoConfig(ConfigFile config)
         {
             var logLevelDescription = new ConfigDescription("", null, new ConfigurationManagerAttributes { IsAdvanced = true });
-            var maxDrawDescription = new ConfigDescription("", null, new ConfigurationManagerAttributes { IsAdvanced = false, CallbackAction = SetDrawDistance });
-            var maxShadowDescription = new ConfigDescription("", null, new ConfigurationManagerAttributes { IsAdvanced = true, CallbackAction = SetShadowDistance });
+            var maxDrawDescription = new ConfigDescription("", null, new ConfigurationManagerAttributes { CallbackAction = SetDrawDistance });
+            var maxShadowDescription = new ConfigDescription("", null, new ConfigurationManagerAttributes { CallbackAction = SetShadowDistance });
 
             LogLevelConfig = config.Bind("Logging", "Log Level", ModdingUtils.LogLevel.Inherited, logLevelDescription);
 
@@ -46,8 +47,8 @@ namespace MaxDrawDistance
 
             if (LogLevel > ModdingUtils.LogLevel.None)
                 Logger.LogInfo("MaxDrawDistance Plug-in loaded");
-            ModdingUtils.Initialize(this, Logger);
             
+            ModdingUtils.Initialize(this, Logger);
             SetShadowDistance();
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
@@ -56,6 +57,7 @@ namespace MaxDrawDistance
         {
             if (LogLevel > ModdingUtils.LogLevel.None)
                 Logger.LogInfo("Updating DrawDistance");
+            
             var cameras = FindObjectsOfType<Camera>();
             foreach (var cam in cameras)
             {
