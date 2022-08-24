@@ -1,8 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using BepInEx;
 using BepInEx.Configuration;
-using PhotonUtil;
+using JetBrains.Annotations;
+using ModdingTales;
+using UnityEngine.SceneManagement;
 
 namespace MaxDrawDistance
 {
@@ -12,51 +13,65 @@ namespace MaxDrawDistance
     {
         // constants
         private const string Guid = "org.hollofox.plugins.MaxDrawDistance";
-        private const string Version = "1.0.0.0";
+        private const string Version = "1.2.0.0";
 
-        private ConfigEntry<float> MaxDraw { get; set; }
-
-        /// <summary>
-        /// Awake plugin
-        /// </summary>
-        void Awake()
-        {
-            Logger.LogInfo("In Awake for MaxDrawDistance");
-
-            MaxDraw = Config.Bind("Hotkeys", "Load Image Shortcut", 300f);
-
-            Debug.Log("MaxDrawDistance Plug-in loaded");
-            ModdingTales.ModdingUtils.Initialize(this, Logger);
-        }
-
-        private bool first = true;
-
-        private bool OnBoard()
-        {
-            return (CameraController.HasInstance &&
-                    BoardSessionManager.HasInstance &&
-                    BoardSessionManager.HasBoardAndIsInNominalState &&
-                    !BoardSessionManager.IsLoading);
-        }
-
+        private static ConfigEntry<ModdingUtils.LogLevel> LogLevelConfig { get; set; }
+        private static ConfigEntry<float> MaxDraw { get; set; }
+        private static ConfigEntry<float> MaxShadowDistance { get; set; }
         
+        private static ModdingUtils.LogLevel LogLevel => LogLevelConfig.Value == ModdingUtils.LogLevel.Inherited ? ModdingUtils.LogLevelConfig.Value: LogLevelConfig.Value;
 
-        /// <summary>
-        /// Looping method run by plugin
-        /// </summary>
-        void Update()
+        public void DoConfig(ConfigFile config)
         {
-            if (OnBoard() && first)
-            {
-                var cameras = FindObjectsOfType<Camera>();
-                foreach (var cam in cameras)
-                {
-                    cam.farClipPlane = MaxDraw.Value;
-                }
+            var logLevelDescription = new ConfigDescription("", null, new ConfigurationManagerAttributes { IsAdvanced = true });
+            var maxDrawDescription = new ConfigDescription("", null, new ConfigurationManagerAttributes { IsAdvanced = false, CallbackAction = SetDrawDistance });
+            var maxShadowDescription = new ConfigDescription("", null, new ConfigurationManagerAttributes { IsAdvanced = true, CallbackAction = SetShadowDistance });
 
-                first = false;
-            }
-            if (!OnBoard()) first = true;
+            LogLevelConfig = config.Bind("Logging", "Log Level", ModdingUtils.LogLevel.Inherited, logLevelDescription);
+
+            if (LogLevel > ModdingUtils.LogLevel.None)
+                Logger.LogInfo("In Awake for MaxDrawDistance");
+
+            MaxDraw = config.Bind("Draw Distance", "Render Distance", 3000f, maxDrawDescription);
+            MaxShadowDistance = config.Bind("Draw Distance", "Shadow Distance", 3000f, maxShadowDescription);
+
+            if (LogLevel >= ModdingUtils.LogLevel.High)
+                Logger.LogInfo("Config Bound");
         }
+
+        [UsedImplicitly]
+        private void Awake()
+        {
+            DoConfig(Config);
+
+            if (LogLevel > ModdingUtils.LogLevel.None)
+                Logger.LogInfo("MaxDrawDistance Plug-in loaded");
+            ModdingUtils.Initialize(this, Logger);
+            
+            SetShadowDistance();
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+        
+        private void SetDrawDistance(object o = null)
+        {
+            if (LogLevel > ModdingUtils.LogLevel.None)
+                Logger.LogInfo("Updating DrawDistance");
+            var cameras = FindObjectsOfType<Camera>();
+            foreach (var cam in cameras)
+            {
+                cam.farClipPlane = MaxDraw.Value;
+            }
+        }
+
+        public void SetShadowDistance(object o = null)
+        {
+            if (LogLevel > ModdingUtils.LogLevel.None)
+                Logger.LogInfo("Updating ShadowDistance");
+            QualitySettings.shadowDistance = MaxShadowDistance.Value;
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode) 
+            => SetDrawDistance();
+        
     }
 }
