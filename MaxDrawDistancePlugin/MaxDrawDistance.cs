@@ -20,7 +20,7 @@ namespace MaxDrawDistance
     {
         // constants
         private const string Guid = "org.hollofox.plugins.MaxDrawDistance";
-        private const string Version = "1.3.0.0";
+        private const string Version = "1.3.1.0";
 
         internal static Harmony harmony;
         internal static SentryOptions _sentryOptions = new SentryOptions
@@ -79,7 +79,7 @@ namespace MaxDrawDistance
                 Logger.LogInfo("In Awake for MaxDrawDistance");
 
             MaxDraw = config.Bind("Draw Distance", "Render Distance", 3000f, maxDrawDescription);
-            MaxShadowDistance = config.Bind("Draw Distance", "Shadow Distance", 3000f, maxShadowDescription);
+            MaxShadowDistance = config.Bind("Draw Distance", "Shadow Distance", 500f, maxShadowDescription);
             // MaxLosDistance = config.Bind("Draw Distance", "Line of Sight Distance", 3000f, maxLosDescription);
 
             if (LogLevel >= ModdingUtils.LogLevel.High)
