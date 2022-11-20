@@ -111,7 +111,7 @@ namespace MaxDrawDistance
             if (LogLevel > ModdingUtils.LogLevel.None)
                 Logger.LogInfo("MaxDrawDistance Plug-in loaded");
 
-            ModdingUtils.Initialize(this, Logger, "HolloFoxe's");
+            ModdingUtils.Initialize(this, Logger, "HolloFoxes'");
             SetShadowDistance();
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
