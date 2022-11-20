@@ -9,16 +9,19 @@
     <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <RepositoryUrl>https://github.com/TaleSpire-Modding/ConfigurationManager.git</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/TaleSpire-Modding/ConfigurationManager.git</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/TaleSpire-Modding/MaxDrawDistancePlugin.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/TaleSpire-Modding/MaxDrawDistancePlugin.git</PackageProjectUrl>
     <Description>This plugin provides an update to the settings tab in TaleSpire. This allow users to update plugin configs at runtime without having to restart the entire applications.</Description>
     <PackageTags>TaleSpire;Mods;</PackageTags>
-    <licenseUrl>https://github.com/TaleSpire-Modding/ConfigurationManager/raw/main/LICENSE.txt</licenseUrl>
-    <PackageLicenseFile>License.txt</PackageLicenseFile>
+    <licenseUrl>https://github.com/TaleSpire-Modding/MaxDrawDistancePlugin/raw/master/License.txt</licenseUrl>
     <Authors>HolloFox</Authors>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\License.txt">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
