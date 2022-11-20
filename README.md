@@ -9,6 +9,13 @@ Currently you need to either follow the build guide down below or use the R2ModM
 The config of this plugin allows to adjust your draw distance using a float.
 
 ## Changelog
+- 1.4.0: Upgrade to Framework 4.8.0 and Nuget Dependency
+- 1.3.1: Updated default shadow draw distance to 500 (thankyou baldrax for the improvement)
+- 1.3.0: Config Manager callback update and added Sentry
+- 1.2.0: Cyberpunk fix, Code Optimization, smarter config and logging
+- 1.1.0: Updated config, Added Max Shadow Distance
+- 1.0.2: Update config names
+- 1.0.1: Config
 - 1.0.0: Initial release
 
 ## Shoutouts
