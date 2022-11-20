@@ -13,14 +13,14 @@ using BepInEx.Logging;
 
 namespace MaxDrawDistance
 {
-    [BepInPlugin(Guid, "HolloFoxe's MaxDrawDistance", Version)]
+    [BepInPlugin(Guid, "MaxDrawDistance", Version)]
     [BepInDependency(SetInjectionFlag.Guid)]
     [BepInDependency(ConfigurationManager.ConfigurationManager.Guid)]
     public class MaxDrawDistance : BaseUnityPlugin
     {
         // constants
         private const string Guid = "org.hollofox.plugins.MaxDrawDistance";
-        private const string Version = "1.3.1.0";
+        public const string Version = "1.4.0.0";
 
         internal static Harmony harmony;
         internal static SentryOptions _sentryOptions = new SentryOptions
@@ -111,7 +111,7 @@ namespace MaxDrawDistance
             if (LogLevel > ModdingUtils.LogLevel.None)
                 Logger.LogInfo("MaxDrawDistance Plug-in loaded");
 
-            ModdingUtils.Initialize(this, Logger);
+            ModdingUtils.Initialize(this, Logger, "HolloFoxes'");
             SetShadowDistance();
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
