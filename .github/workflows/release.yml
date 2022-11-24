@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - master
+    paths:
+      - 'manifest.json'
+      - '.github/workflows/release.yml'
+      - 'MaxDrawDistancePlugin/MaxDrawDistancePlugin.csproj'
 
 jobs:
   Build_and_Release:
@@ -17,6 +21,9 @@ jobs:
 
       - name: build and publish
         run: |
-          cd MaxDrawDistancePlugin\bin\Release
+          cd MaxDrawDistancePlugin
+          dotnet restore MaxDrawDistancePlugin.csproj
+          dotnet build MaxDrawDistancePlugin.csproj --configuration Release
+          cd bin/Release
           dotnet nuget push *.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json --skip-duplicate
           dotnet nuget push *.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/${{ github.repository_owner }} --skip-duplicate
