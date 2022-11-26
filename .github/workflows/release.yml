@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - master
-    paths:
-      - 'manifest.json'
+#    paths:
+#      - 'manifest.json'
 
 jobs:
   Build_and_Release:
@@ -49,9 +49,9 @@ jobs:
       
       - uses: GreenTF/upload-thunderstore-package@v2.2
         with:
-          namespace: brcoding # the thunderstore 'team' to publish under
+          namespace: HolloFox_TS # the thunderstore 'team' to publish under
           description: ${{steps.package.outputs.DESCRIPTION}} # Use the description from manifest
-          token: ${{ secrets.BRCODING_TOKEN }}
+          token: ${{ secrets.HOLLOFOX_TS_TOKEN }}
           name: ${{steps.package.outputs.NAME}} # the name of the package
           version: ${{steps.package.outputs.VERSION_NUMBER}} # Use the version from manifest
           community: talespire
