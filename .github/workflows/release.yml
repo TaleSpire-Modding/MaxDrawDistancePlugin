@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - master
-    paths:
-      - 'manifest.json'
+#    paths:
+#      - 'manifest.json'
 
 jobs:
   Build_and_Release:
@@ -38,7 +38,7 @@ jobs:
           Copy-Item -Path License.txt -Destination 'thunderstore'
           Copy-Item -Path manifest.json -Destination 'thunderstore'
           Copy-Item -Path README.md -Destination 'thunderstore'
-          Copy-Item -Path MaxDrawDistancePlugin/bin/Release/net48/MaxDrawDistancePlugin.dll -Destination 'thunderstore'
+          Copy-Item -Path MaxDrawDistancePlugin/bin/Release/net48/MaxDrawDistance.dll -Destination 'thunderstore'
           $json = Get-Content "manifest.json" | ConvertFrom-Json
           $version = $json.version_number
           $name = $json.name
