@@ -1,6 +1,6 @@
 {
     "name": "MaxDrawDistancePlugin",
-    "version_number": "1.4.0",
+    "version_number": "1.4.1",
     "website_url": "https://github.com/TaleSpire-Modding/MaxDrawDistancePlugin",
     "description": "Can't see far enough? Look no further?, See further!!!",
     "dependencies": [
