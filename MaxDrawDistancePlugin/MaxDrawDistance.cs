@@ -20,7 +20,7 @@ namespace MaxDrawDistance
     {
         // constants
         private const string Guid = "org.hollofox.plugins.MaxDrawDistance";
-        public const string Version = "1.4.0.0";
+        public const string Version = "0.0.0.0";
 
         internal static Harmony harmony;
         internal static SentryOptions _sentryOptions = new SentryOptions
