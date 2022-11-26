@@ -56,4 +56,4 @@ jobs:
           version: ${{steps.package.outputs.VERSION_NUMBER}} # Use the version from manifest
           community: talespire
           path: thunderstore
-          deps: bbepisTaleSpire-BepInExPack@5.4.10
+          deps: bbepisTaleSpire-BepInExPack@5.4.10 brcoding-SetInjectionFlagPlugin@2.3.0 HolloFox_TS-Config_Manager@0.10.0
