@@ -1,4 +1,6 @@
 # Max Draw Distance Plugin
+[![Nuget Published](https://github.com/TaleSpire-Modding/MaxDrawDistancePlugin/actions/workflows/release.yml/badge.svg)](https://github.com/TaleSpire-Modding/MaxDrawDistancePlugin/actions/workflows/release.yml)
+
 Can't see far enough? with this plugin you'll be able to see the end of the world!
 
 ## Install
