@@ -30,11 +30,13 @@ jobs:
           echo "DESCRIPTION=${description}" >> $env:GITHUB_OUTPUT
           echo "PROJECT=MaxDrawDistancePlugin.csproj" >> $env:GITHUB_OUTPUT
           echo "PLUGIN=MaxDrawDistance.cs" >> $env:GITHUB_OUTPUT
+          $dependencies = ""
           foreach ($dep in $json.dependencies){
             $first,$second,$rest = $dep -split '-',3
             $newName = "${first}-${second}@${rest}"
-            echo $newName
+            $dependencies = "${dependencies} ${newName}"
           }
+          echo $dependencies
 
       - name: Build
         shell: pwsh
