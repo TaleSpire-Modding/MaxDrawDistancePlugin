@@ -33,8 +33,7 @@ jobs:
           $dependencies = ""
           foreach ($dep in $json.dependencies){
             $first,$second,$rest = $dep -split '-',3
-            $newName = "${first}-${second}@${rest}"
-            $dependencies = "${dependencies} ${newName}".Trim()
+            $dependencies = "${dependencies} ${first}-${second}@${rest}".Trim()
           }
           echo "DEPENDENCIES=${dependencies}" >> $env:GITHUB_OUTPUT
 
