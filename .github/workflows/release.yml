@@ -19,7 +19,7 @@ jobs:
 
       - name: Read Manifest
         shell: pwsh
-	id: package
+        id: package
         run: |
           $json = Get-Content "manifest.json" | ConvertFrom-Json
           $version = $json.version_number
@@ -37,7 +37,7 @@ jobs:
           cd MaxDrawDistancePlugin
           $pluginValue = (Get-Content ${{steps.package.outputs.PLUGIN}}) -Replace "0.0.0.0", "$version.0" 
           $projectValue = (Get-Content ${{steps.package.outputs.PROJECT}}) -Replace "<Version>0.0.0</Version>", "<Version>$version</Version>" 
-	  Set-Content ${{steps.package.outputs.PLUGIN}} -Value $pluginValue
+          Set-Content ${{steps.package.outputs.PLUGIN}} -Value $pluginValue
           Set-Content ${{steps.package.outputs.PROJECT}} -Value $projectValue
           dotnet restore ${{steps.package.outputs.PROJECT}}
           dotnet build ${{steps.package.outputs.PROJECT}} --configuration Release
@@ -45,7 +45,7 @@ jobs:
       - name: Publish
         shell: pwsh
         run: |
-	  cd MaxDrawDistancePlugin/bin/Release
+          cd MaxDrawDistancePlugin/bin/Release
           dotnet nuget push *.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json --skip-duplicate
           dotnet nuget push *.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/${{ github.repository_owner }} --skip-duplicate
           
@@ -53,10 +53,7 @@ jobs:
         shell: pwsh
         run: |
           New-Item -Path 'thunderstore' -ItemType Directory
-          Copy-Item -Path icon.png -Destination 'thunderstore'
           Copy-Item -Path License.txt -Destination 'thunderstore'
-          Copy-Item -Path manifest.json -Destination 'thunderstore'
-          Copy-Item -Path README.md -Destination 'thunderstore'
           Copy-Item -Path MaxDrawDistancePlugin/bin/Release/net48/MaxDrawDistance.dll -Destination 'thunderstore'
       
       - uses: GreenTF/upload-thunderstore-package@v2.2
