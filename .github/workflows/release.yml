@@ -35,8 +35,8 @@ jobs:
         shell: pwsh
         run: |
           cd MaxDrawDistancePlugin
-          $pluginValue = (Get-Content ${{steps.package.outputs.PLUGIN}}) -Replace "0.0.0.0", "$version.0" 
-          $projectValue = (Get-Content ${{steps.package.outputs.PROJECT}}) -Replace "<Version>0.0.0</Version>", "<Version>$version</Version>" 
+          $pluginValue = (Get-Content ${{steps.package.outputs.PLUGIN}}) -Replace "0.0.0.0", "${{steps.package.outputs.VERSION_NUMBER}}.0" 
+          $projectValue = (Get-Content ${{steps.package.outputs.PROJECT}}) -Replace "<Version>0.0.0</Version>", "<Version>${{steps.package.outputs.VERSION_NUMBER}}</Version>" 
           Set-Content ${{steps.package.outputs.PLUGIN}} -Value $pluginValue
           Set-Content ${{steps.package.outputs.PROJECT}} -Value $projectValue
           dotnet restore ${{steps.package.outputs.PROJECT}}
