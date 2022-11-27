@@ -30,7 +30,7 @@ jobs:
           echo "DESCRIPTION=${description}" >> $env:GITHUB_OUTPUT
           echo "PROJECT=MaxDrawDistancePlugin.csproj" >> $env:GITHUB_OUTPUT
           echo "PLUGIN=MaxDrawDistance.cs" >> $env:GITHUB_OUTPUT
-          echo $json.dependencies
+          echo $json.dependencies | ConvertTo-Csv
 
       - name: Build
         shell: pwsh
