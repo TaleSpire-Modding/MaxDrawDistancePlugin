@@ -12,6 +12,7 @@ The config of this plugin allows to adjust your draw distance using a float.
 
 ## Changelog
 ```
+- 1.4.2: Extract PowerShell into GithubAction (Pipeline work)
 - 1.4.1: Initial Pipeline deploy 
 - 1.4.0: Upgrade to Framework 4.8.0 and Nuget Dependency
 - 1.3.1: Updated default shadow draw distance to 500 (thankyou baldrax for the improvement)
