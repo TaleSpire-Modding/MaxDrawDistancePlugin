@@ -30,6 +30,7 @@ jobs:
           echo "DESCRIPTION=${description}" >> $env:GITHUB_OUTPUT
           echo "PROJECT=MaxDrawDistancePlugin.csproj" >> $env:GITHUB_OUTPUT
           echo "PLUGIN=MaxDrawDistance.cs" >> $env:GITHUB_OUTPUT
+          echo $json.dependencies
 
       - name: Build
         shell: pwsh
@@ -56,13 +57,13 @@ jobs:
           Copy-Item -Path License.txt -Destination 'thunderstore'
           Copy-Item -Path MaxDrawDistancePlugin/bin/Release/net48/MaxDrawDistance.dll -Destination 'thunderstore'
       
-      - uses: GreenTF/upload-thunderstore-package@v2.2
-        with:
-          namespace: HolloFox_TS # the thunderstore 'team' to publish under
-          description: ${{steps.package.outputs.DESCRIPTION}} # Use the description from manifest
-          token: ${{ secrets.HOLLOFOX_TS_TOKEN }}
-          name: ${{steps.package.outputs.NAME}} # the name of the package
-          version: ${{steps.package.outputs.VERSION_NUMBER}} # Use the version from manifest
-          community: talespire
-          path: thunderstore
-          deps: bbepisTaleSpire-BepInExPack@5.4.10 brcoding-SetInjectionFlagPlugin@2.3.0 HolloFox_TS-Config_Manager@0.10.0
+#       - uses: GreenTF/upload-thunderstore-package@v2.2
+#         with:
+#           namespace: HolloFox_TS # the thunderstore 'team' to publish under
+#           description: ${{steps.package.outputs.DESCRIPTION}} # Use the description from manifest
+#           token: ${{ secrets.HOLLOFOX_TS_TOKEN }}
+#           name: ${{steps.package.outputs.NAME}} # the name of the package
+#           version: ${{steps.package.outputs.VERSION_NUMBER}} # Use the version from manifest
+#           community: talespire
+#           path: thunderstore
+#           deps: bbepisTaleSpire-BepInExPack@5.4.10 brcoding-SetInjectionFlagPlugin@2.3.0 HolloFox_TS-Config_Manager@0.10.0
