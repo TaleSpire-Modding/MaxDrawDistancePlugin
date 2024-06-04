@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System;
 using BepInEx;
 using BepInEx.Configuration;
 using HarmonyLib;
@@ -8,7 +7,7 @@ using ModdingTales;
 using PluginUtilities;
 using UnityEngine.SceneManagement;
 using Sentry;
-using BepInEx.Logging;
+using MaxDrawDistance.Logging;
 
 namespace MaxDrawDistance
 {
@@ -76,7 +75,7 @@ namespace MaxDrawDistance
             DoConfig(Config);
             DoPatching();
 
-            Logger.LogEvent += GenerateSentryLogFowarding(_sentryOptions, Version);
+            Logger.LogEvent += BepinexLogging.GenerateSentryLogFowarding(_sentryOptions, Version);
             Logger.LogInfo("Plug-in loaded");
 
             ModdingUtils.Initialize(this, Logger, "HolloFoxes'");
@@ -105,59 +104,6 @@ namespace MaxDrawDistance
         {
             SetDrawDistance();
             SetShadowDistance();
-        }
-
-        /// <summary>
-        /// Generates a log forwarding function for Sentry.
-        /// </summary>
-        public EventHandler<LogEventArgs> GenerateSentryLogFowarding(SentryOptions sentryOptions, string pluginVersion)
-        {
-            void output(object sender, LogEventArgs e)
-            {
-                void _scope(Scope scope)
-                {
-                    scope.User = new User
-                    {
-                        Username = BackendManager.TSUserID.Value.ToString(),
-                    };
-                    scope.Release = pluginVersion;
-                }
-
-                using (SentrySdk.Init(sentryOptions))
-                {
-                    switch (e.Level)
-                    {
-                        case LogLevel.Fatal:
-                            SentrySdk.CaptureMessage(e.Data.ToString(), _scope, SentryLevel.Fatal);
-                            break;
-                        case LogLevel.Error:
-                            SentrySdk.CaptureMessage(e.Data.ToString(), _scope, SentryLevel.Error);
-                            break;
-                        case LogLevel.Warning:
-                            SentrySdk.CaptureMessage(e.Data.ToString(), _scope, SentryLevel.Warning);
-                            break;
-                        
-                        default:
-                            // Only want to log the following levels to Sentry if we're in debug mode
-                            if (Version == "0.0" + ".0.0")
-                            {
-                                switch (e.Level)
-                                {
-                                    case LogLevel.Info:
-                                    case LogLevel.Message:
-                                        SentrySdk.CaptureMessage(e.Data.ToString(), _scope, SentryLevel.Info);
-                                        break;
-                                    case LogLevel.Debug:
-                                        SentrySdk.CaptureMessage(e.Data.ToString(), _scope, SentryLevel.Debug);
-                                        break;
-                                }
-                            }
-                            break;
-                    }
-                }
-            }
-
-            return output;
         }
     }
 }
