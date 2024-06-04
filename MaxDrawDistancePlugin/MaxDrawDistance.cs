@@ -45,7 +45,6 @@ namespace MaxDrawDistance
         private static ConfigEntry<ModdingUtils.LogLevel> LogLevelConfig { get; set; }
         private static ConfigEntry<float> MaxDraw { get; set; }
         private static ConfigEntry<float> MaxShadowDistance { get; set; }
-        internal static ConfigEntry<float> MaxLosDistance { get; set; }
         internal static logToSentry useSentry => _useSentry.Value;
         
         internal static ManualLogSource _logger;
@@ -71,8 +70,7 @@ namespace MaxDrawDistance
                         SentryInvoke(SetShadowDistance);
                     }
                 });
-            // var maxLosDescription = new ConfigDescription("", null, new ConfigurationManagerAttributes { /*CallbackAction = LosPatch.UpdateFarClip*/});
-
+            
             LogLevelConfig = config.Bind("Logging", "Log Level", ModdingUtils.LogLevel.Inherited, logLevelDescription);
 
             if (LogLevel > ModdingUtils.LogLevel.None)
@@ -80,8 +78,7 @@ namespace MaxDrawDistance
 
             MaxDraw = config.Bind("Draw Distance", "Render Distance", 3000f, maxDrawDescription);
             MaxShadowDistance = config.Bind("Draw Distance", "Shadow Distance", 500f, maxShadowDescription);
-            // MaxLosDistance = config.Bind("Draw Distance", "Line of Sight Distance", 3000f, maxLosDescription);
-
+            
             if (LogLevel >= ModdingUtils.LogLevel.High)
                 Logger.LogInfo("Config Bound");
         }
