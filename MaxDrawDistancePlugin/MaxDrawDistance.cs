@@ -6,8 +6,6 @@ using JetBrains.Annotations;
 using ModdingTales;
 using PluginUtilities;
 using UnityEngine.SceneManagement;
-using Sentry;
-using MaxDrawDistance.Logging;
 
 namespace MaxDrawDistance
 {
@@ -19,16 +17,6 @@ namespace MaxDrawDistance
         // constants
         private const string Guid = "org.hollofox.plugins.MaxDrawDistance";
         public const string Version = "0.0.0.0";
-
-        internal static SentryOptions _sentryOptions = new SentryOptions
-        {
-            // Tells which project in Sentry to send events to:
-            Dsn = "https://06dc4d9a9d3a466b9c31839439ce487e@o1208746.ingest.sentry.io/4503901801873408",
-            Debug = true,
-            TracesSampleRate = 0.2,
-            IsGlobalModeEnabled = true,
-            AttachStacktrace = true,
-        };
 
         private static ConfigEntry<float> MaxDraw { get; set; }
         private static ConfigEntry<float> MaxShadowDistance { get; set; }
@@ -75,10 +63,9 @@ namespace MaxDrawDistance
             DoConfig(Config);
             DoPatching();
 
-            Logger.LogEvent += BepinexLogging.GenerateSentryLogFowarding(_sentryOptions, Version);
             Logger.LogInfo("Plug-in loaded");
 
-            ModdingUtils.Initialize(this, Logger, "HolloFoxes'");
+            ModdingUtils.AddPluginToMenuList(this, "HolloFoxes'");
             SetShadowDistance();
             SceneManager.sceneLoaded += OnSceneLoaded;
         }

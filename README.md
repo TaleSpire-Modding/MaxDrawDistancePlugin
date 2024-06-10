@@ -12,6 +12,7 @@ The config of this plugin allows to adjust your draw distance using a float.
 
 ## Changelog
 ```
+- 1.4.4: Logging update
 - 1.4.3: Fix icon and readme deploy
 - 1.4.2: Extract PowerShell into GithubAction (Pipeline work)
 - 1.4.1: Initial Pipeline deploy 

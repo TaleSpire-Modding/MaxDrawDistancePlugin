@@ -30,8 +30,7 @@
     <PackageReference Include="TaleSpire" Version="1.2.2"></PackageReference>
     <PackageReference Include="Talespire.BepInEx" Version="5.4.22"></PackageReference>
     <PackageReference Include="TaleSpire.ConfigurationManager" Version="0.15.0" />
-    <PackageReference Include="TaleSpire.Sentry" Version="1.0.0" />
-    <PackageReference Include="TaleSpire.SetInjectionFlagPlugin" Version="2.5.2" />
+    <PackageReference Include="TaleSpire.SetInjectionFlagPlugin" Version="2.6.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
