@@ -5,13 +5,14 @@ Can't see far enough? with this plugin you'll be able to see the end of the worl
 
 ## Install
 
-Currently you need to either follow the build guide down below or use the R2ModMan. 
+Currently, you need to either follow the build guide down below or use the R2ModMan. 
 
 ## Usage
 The config of this plugin allows to adjust your draw distance using a float.
 
 ## Changelog
 ```
+- 1.4.5: Cleanup dependencies
 - 1.4.4: Logging update
 - 1.4.3: Fix icon and readme deploy
 - 1.4.2: Extract PowerShell into GithubAction (Pipeline work)
@@ -25,9 +26,3 @@ The config of this plugin allows to adjust your draw distance using a float.
 - 1.0.1: Config
 - 1.0.0: Initial release
 ```
-
-## Shoutouts
-Shoutout to my Patreons on https://www.patreon.com/HolloFox recognising your
-mighty contribution to my caffeine addiciton:
-- John Fuller
-- [Tales Tavern](https://talestavern.com/) - MadWizard
