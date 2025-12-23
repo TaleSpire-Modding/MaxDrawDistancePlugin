@@ -12,6 +12,7 @@ The config of this plugin allows to adjust your draw distance using a float.
 
 ## Changelog
 ```
+- 1.5.0: Remove Config Manager Dependency and use SetInjectionFlag as source of trugh for ConfigurationAttributes
 - 1.4.5: Cleanup dependencies
 - 1.4.4: Logging update
 - 1.4.3: Fix icon and readme deploy
@@ -26,3 +27,11 @@ The config of this plugin allows to adjust your draw distance using a float.
 - 1.0.1: Config
 - 1.0.0: Initial release
 ```
+
+## Shoutouts
+<!-- CONTRIBUTORS-START -->
+Shoutout to my past [Patreons](https://www.patreon.com/HolloFox) and [Discord](https://discord.gg/up6sWSjr) members, recognising your mighty support and contribution to my caffeine addiction:
+- [Demongund](https://www.twitch.tv/demongund) - Introduced me to TaleSpire
+- [Tales Tavern/MadWizard](https://talestavern.com/)
+- Joaqim Planstedt
+<!-- CONTRIBUTORS-END -->

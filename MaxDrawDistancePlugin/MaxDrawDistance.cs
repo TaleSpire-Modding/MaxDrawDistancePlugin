@@ -9,14 +9,14 @@ using UnityEngine.SceneManagement;
 
 namespace MaxDrawDistance
 {
-    [BepInPlugin(Guid, "MaxDrawDistance", Version)]
+    [BepInPlugin(Guid, Name, Version)]
     [BepInDependency(SetInjectionFlag.Guid)]
-    [BepInDependency(ConfigurationManager.ConfigurationManager.Guid)]
     public class MaxDrawDistance : BaseUnityPlugin
     {
         // constants
         private const string Guid = "org.hollofox.plugins.MaxDrawDistance";
         public const string Version = "0.0.0.0";
+        public const string Name = "MaxDrawDistance";
 
         private static ConfigEntry<float> MaxDraw { get; set; }
         private static ConfigEntry<float> MaxShadowDistance { get; set; }
@@ -24,14 +24,14 @@ namespace MaxDrawDistance
         public void DoConfig(ConfigFile config)
         {
             ConfigDescription maxDrawDescription = new ConfigDescription("", null,
-                new ConfigurationManagerAttributes { CallbackAction = (o) =>
+                new ConfigurationAttributes { CallbackAction = (o) =>
                     {
                         SetDrawDistance();
                     }
                 });
 
             ConfigDescription maxShadowDescription = new ConfigDescription("", null,
-                new ConfigurationManagerAttributes {
+                new ConfigurationAttributes {
                     CallbackAction = (o) =>
                     {
                         SetShadowDistance();
