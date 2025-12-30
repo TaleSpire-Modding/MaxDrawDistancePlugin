@@ -12,6 +12,7 @@ The config of this plugin allows to adjust your draw distance using a float.
 
 ## Changelog
 ```
+- 1.5.1: Bump SetInjectionFlag package version and implement logic for unpatching
 - 1.5.0: Remove Config Manager Dependency and use SetInjectionFlag as source of trugh for ConfigurationAttributes
 - 1.4.5: Cleanup dependencies
 - 1.4.4: Logging update

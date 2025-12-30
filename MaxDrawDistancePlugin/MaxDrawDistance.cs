@@ -3,7 +3,6 @@ using BepInEx;
 using BepInEx.Configuration;
 using HarmonyLib;
 using JetBrains.Annotations;
-using ModdingTales;
 using PluginUtilities;
 using UnityEngine.SceneManagement;
 
@@ -11,7 +10,7 @@ namespace MaxDrawDistance
 {
     [BepInPlugin(Guid, Name, Version)]
     [BepInDependency(SetInjectionFlag.Guid)]
-    public class MaxDrawDistance : BaseUnityPlugin
+    public class MaxDrawDistance : DependencyUnityPlugin
     {
         // constants
         private const string Guid = "org.hollofox.plugins.MaxDrawDistance";
@@ -20,7 +19,10 @@ namespace MaxDrawDistance
 
         private static ConfigEntry<float> MaxDraw { get; set; }
         private static ConfigEntry<float> MaxShadowDistance { get; set; }
-        
+
+        private Harmony harmony;
+        private float? defaultShadowDistance;
+
         public void DoConfig(ConfigFile config)
         {
             ConfigDescription maxDrawDescription = new ConfigDescription("", null,
@@ -46,28 +48,30 @@ namespace MaxDrawDistance
             Logger.LogDebug("Config Bound");
         }
 
-        public void DoPatching()
+        [UsedImplicitly]
+        protected override void OnAwake()
         {
-            new Harmony(Guid).PatchAll();
+            DoConfig(Config);
+            
+            harmony = new Harmony(Guid);
+            harmony.PatchAll();
             Logger.LogDebug($"Patched.");
+
+            defaultShadowDistance = QualitySettings.shadowDistance;
+
+            Logger.LogInfo("Plug-in loaded");
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
         [UsedImplicitly]
-        private void Awake()
+        protected override void OnDestroyed()
         {
-            Setup();
-        }
+            harmony.UnpatchSelf();
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+            if (defaultShadowDistance != null)
+                QualitySettings.shadowDistance = defaultShadowDistance.Value;
+            Logger.LogInfo("Plug-in unloaded");
 
-        private void Setup()
-        {
-            DoConfig(Config);
-            DoPatching();
-
-            Logger.LogInfo("Plug-in loaded");
-
-            ModdingUtils.AddPluginToMenuList(this, "HolloFoxes'");
-            SetShadowDistance();
-            SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
         private void SetDrawDistance()
