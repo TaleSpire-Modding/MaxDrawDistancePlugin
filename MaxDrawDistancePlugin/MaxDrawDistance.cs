@@ -10,7 +10,7 @@ namespace MaxDrawDistance
 {
     [BepInPlugin(Guid, Name, Version)]
     [BepInDependency(SetInjectionFlag.Guid)]
-    public class MaxDrawDistance : DependencyUnityPlugin
+    public class MaxDrawDistance : DependencyUnityPlugin<MaxDrawDistance>
     {
         // constants
         private const string Guid = "org.hollofox.plugins.MaxDrawDistance";
@@ -23,21 +23,16 @@ namespace MaxDrawDistance
         private Harmony harmony;
         private float? defaultShadowDistance;
 
-        public void DoConfig(ConfigFile config)
+        protected override void OnSetupConfig(ConfigFile config)
         {
             ConfigDescription maxDrawDescription = new ConfigDescription("", null,
-                new ConfigurationAttributes { CallbackAction = (o) =>
-                    {
-                        SetDrawDistance();
-                    }
+                new ConfigurationAttributes { 
+                    CallbackAction = UpdateDrawDistance
                 });
 
             ConfigDescription maxShadowDescription = new ConfigDescription("", null,
                 new ConfigurationAttributes {
-                    CallbackAction = (o) =>
-                    {
-                        SetShadowDistance();
-                    }
+                    CallbackAction = UpdateDrawDistance
                 });
 
             Logger.LogDebug("Awake");
@@ -48,11 +43,14 @@ namespace MaxDrawDistance
             Logger.LogDebug("Config Bound");
         }
 
+        private void UpdateDrawDistance(object o)
+        {
+            if (Enabled) SetDrawDistance();
+        }
+
         [UsedImplicitly]
         protected override void OnAwake()
         {
-            DoConfig(Config);
-            
             harmony = new Harmony(Guid);
             harmony.PatchAll();
             Logger.LogDebug($"Patched.");
